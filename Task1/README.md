@@ -166,6 +166,41 @@ plt.show()
 <img width="1220" height="619" alt="image" src="https://github.com/user-attachments/assets/f384ae7c-5aee-4bfa-879b-47c453daf6a7" />
 
 
+### 2. Implement a second circuit with a framework of your choice:
+
+Then I create the second circuit, also in Pennylane
+
+```Python
+
+#Creamos el segundo circuito
+dev_2 = qml.device('default.qubit', wires = 5)
+
+@qml.qnode(dev_2)
+def circuito_2():
+    qml.Hadamard(wires=0)
+    qml.Hadamard(wires=1)
+    qml.Hadamard(wires=3)
+    qml.Hadamard(wires=4)
+
+    qml.RX(np.pi/3, wires=2)
+
+    qml.CSWAP(wires=[0, 1, 3])
+    qml.CSWAP(wires=[0, 2, 4])
+
+    qml.Hadamard(wires=0)
+
+    return qml.probs(wires=0)
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
