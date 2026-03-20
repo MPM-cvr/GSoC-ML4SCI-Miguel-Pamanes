@@ -54,5 +54,7 @@ def circuito():
 #Calculamos las probabilidades y las muestras aqui muestras se refiere a los posibles estados 
 probabilidades, muestras = circuito()
 
+```
+
 
 
