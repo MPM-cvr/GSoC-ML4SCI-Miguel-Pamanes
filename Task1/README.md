@@ -115,6 +115,7 @@ for i, p in enumerate(probabilidades):
 
 Which gave us the following results:
 
+```text
 Estado |00000> : 0.0312 (3.12%)
 Estado |00001> : 0.0312 (3.12%)
 Estado |00010> : 0.0312 (3.12%)
@@ -147,7 +148,7 @@ Estado |11100> : 0.0312 (3.12%)
 Estado |11101> : 0.0312 (3.12%)
 Estado |11110> : 0.0312 (3.12%)
 Estado |11111> : 0.0312 (3.12%)
-
+```
 
 Last but not least, we plot the circuit:
 
