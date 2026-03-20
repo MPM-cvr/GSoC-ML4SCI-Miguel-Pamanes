@@ -15,3 +15,14 @@ In this section, I will present the development of the first task. This task req
     - b) Rotate the second qubit by $\pi/3$ around X
     - c) Apply Hadamard gate to the third and fourth qubit
     - d) Perform a swap test between the states of the first and second qubit $|q_1 q_2\rangle$ and the third and fourth qubit $|q_3 q_4\rangle$
+
+
+### 1. Implement a simple quantum operation with Cirq or Pennylane
+
+```python
+import pennylane as qml
+import numpy as np
+import matplotlib.pyplot as plt
+import cirq
+import pandas as pd
+
