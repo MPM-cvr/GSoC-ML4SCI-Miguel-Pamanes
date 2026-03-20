@@ -63,7 +63,7 @@ probabilidades, muestras = circuito()
 
 ```
 We obtain the following results:
-
+```text
 Muestras:
 [1 0 0 1 0]
 [1 0 1 0 1]
@@ -97,6 +97,7 @@ Muestras:
 [1 1 1 1 0]
 [1 1 0 1 1]
 [0 1 1 0 0]
+```
 
 Then, we check the probability associated with each state:
 
