@@ -1,4 +1,4 @@
-Task I: Quantum Computing Part 
+### Task I: Quantum Computing Part 
 
 In this section I will show you the development of the first task. 
 
@@ -17,6 +17,7 @@ This task ask the following things:
   e) Rotate X with pi/2 on any qubit 
   
   f) Plot the circuit 
+  
 2) Implement a second circuit with a framework of your choice:
   
   a) Apply a Hadmard gate to the first qubit
