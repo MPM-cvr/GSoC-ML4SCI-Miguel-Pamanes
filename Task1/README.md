@@ -98,7 +98,64 @@ Muestras:
  [1 1 0 1 1]
  [0 1 1 0 0]]
 
-Then we check the probability associated to each state 
+Then, we check the probability associated with each state:
 
+```
+
+for i, p in enumerate(probabilidades):
+    estado_binario = format(i, '05b') 
+    print(f"Estado |{estado_binario}> : {p:.4f} ({p*100:.2f}%)")
+
+
+```
+
+Wich gave us the next results
+
+Estado |00000> : 0.0312 (3.12%)
+Estado |00001> : 0.0312 (3.12%)
+Estado |00010> : 0.0312 (3.12%)
+Estado |00011> : 0.0312 (3.12%)
+Estado |00100> : 0.0312 (3.12%)
+Estado |00101> : 0.0312 (3.12%)
+Estado |00110> : 0.0312 (3.12%)
+Estado |00111> : 0.0312 (3.12%)
+Estado |01000> : 0.0312 (3.12%)
+Estado |01001> : 0.0312 (3.12%)
+Estado |01010> : 0.0312 (3.12%)
+Estado |01011> : 0.0312 (3.12%)
+Estado |01100> : 0.0312 (3.12%)
+Estado |01101> : 0.0312 (3.12%)
+Estado |01110> : 0.0312 (3.12%)
+Estado |01111> : 0.0312 (3.12%)
+Estado |10000> : 0.0312 (3.12%)
+Estado |10001> : 0.0312 (3.12%)
+Estado |10010> : 0.0312 (3.12%)
+Estado |10011> : 0.0312 (3.12%)
+Estado |10100> : 0.0312 (3.12%)
+Estado |10101> : 0.0312 (3.12%)
+Estado |10110> : 0.0312 (3.12%)
+Estado |10111> : 0.0312 (3.12%)
+Estado |11000> : 0.0312 (3.12%)
+Estado |11001> : 0.0312 (3.12%)
+Estado |11010> : 0.0312 (3.12%)
+Estado |11011> : 0.0312 (3.12%)
+Estado |11100> : 0.0312 (3.12%)
+Estado |11101> : 0.0312 (3.12%)
+Estado |11110> : 0.0312 (3.12%)
+Estado |11111> : 0.0312 (3.12%)
+
+```
+
+At last but not least, we plot the circuit.
+
+```
+
+#Graficamos el circuto
+
+fig, ax = qml.draw_mpl(circuito, scale=0.8)()
+fig.suptitle("Circuito", fontsize=14)
+plt.show()
+
+```
 
 
