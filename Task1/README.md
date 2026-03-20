@@ -63,6 +63,12 @@ probabilidades, muestras = circuito()
 
 ```
 We obtain the following results:
+```Python
+#Revisamos las muestras
+print("Muestras:")
+print(muestras[:32])
+```
+
 ```text
 Muestras:
 [1 0 0 1 0]
