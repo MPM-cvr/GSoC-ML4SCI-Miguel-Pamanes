@@ -19,15 +19,22 @@ In this section, I will present the development of the first task. This task req
 
 ### 1. Implement a simple quantum operation with Cirq or Pennylane
 
-For this task I chose to use Pennylane instead Cirq
+For this task, I chose to use PennyLane instead of Cirq.
+
+First, I import the necessary packages:
 
 ```python
 import pennylane as qml
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+```
 
+Then, we create the circuit with PennyLane. 
 
+First, we define a device with 5 qubits. After that, we construct the quantum node applying the Hadamard gates, the CNOTs, the SWAP, and the RX rotation as requested:
+
+```
 dev = qml.device('default.qubit', wires = 5, shots = 10000) #Para fines educativos probamos solo 10,000
 
 
@@ -55,6 +62,43 @@ def circuito():
 probabilidades, muestras = circuito()
 
 ```
+We obtain the following results:
+
+Muestras:
+[[1 0 0 1 0]
+ [1 0 1 0 1]
+ [0 1 1 1 1]
+ [0 1 0 1 0]
+ [1 1 1 1 1]
+ [1 0 0 0 1]
+ [0 0 1 1 1]
+ [0 1 0 0 0]
+ [0 0 0 0 1]
+ [1 0 0 0 0]
+ [0 0 1 1 1]
+ [0 0 1 0 1]
+ [1 1 0 0 1]
+ [1 0 1 0 1]
+ [1 0 0 1 1]
+ [0 1 0 1 0]
+ [1 1 1 0 1]
+ [1 0 1 1 1]
+ [1 1 0 1 0]
+ [0 1 1 0 0]
+ [1 1 0 0 0]
+ [1 0 0 1 1]
+ [1 1 0 0 1]
+ [1 0 1 0 0]
+ [1 0 0 0 0]
+ [0 0 1 1 0]
+ [1 0 1 1 1]
+ [1 1 0 0 0]
+ [1 1 1 0 1]
+ [1 1 1 1 0]
+ [1 1 0 1 1]
+ [0 1 1 0 0]]
+
+Then we check the probability associated to each state 
 
 
 
