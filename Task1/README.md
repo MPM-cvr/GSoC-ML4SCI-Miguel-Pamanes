@@ -34,7 +34,7 @@ Then, we create the circuit with PennyLane.
 
 First, we define a device with 5 qubits. After that, we construct the quantum node applying the Hadamard gates, the CNOTs, the SWAP, and the RX rotation as requested:
 
-```
+```python
 dev = qml.device('default.qubit', wires = 5, shots = 10000) #Para fines educativos probamos solo 10,000
 
 
@@ -100,13 +100,10 @@ Muestras:
 
 Then, we check the probability associated with each state:
 
-```
-
+```python
 for i, p in enumerate(probabilidades):
     estado_binario = format(i, '05b') 
     print(f"Estado |{estado_binario}> : {p:.4f} ({p*100:.2f}%)")
-
-
 ```
 
 Wich gave us the next results
@@ -144,11 +141,10 @@ Estado |11101> : 0.0312 (3.12%)
 Estado |11110> : 0.0312 (3.12%)
 Estado |11111> : 0.0312 (3.12%)
 
-```
 
 At last but not least, we plot the circuit.
 
-```
+```python
 
 #Graficamos el circuto
 
