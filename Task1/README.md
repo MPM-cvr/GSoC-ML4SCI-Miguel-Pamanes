@@ -19,10 +19,40 @@ In this section, I will present the development of the first task. This task req
 
 ### 1. Implement a simple quantum operation with Cirq or Pennylane
 
+For this task I chose to use Pennylane instead Cirq
+
 ```python
 import pennylane as qml
 import numpy as np
 import matplotlib.pyplot as plt
-import cirq
 import pandas as pd
+
+
+dev = qml.device('default.qubit', wires = 5, shots = 10000) #Para fines educativos probamos solo 10,000
+
+
+#Creamos Nuestro Circuito conforme los lineamientos que se piden
+@qml.qnode(dev)
+def circuito():
+    for i in range(5):
+        qml.Hadamard(wires=i)
+
+    qml.Barrier()       #Solo por estética
+
+    qml.CNOT(wires = [0, 1])
+    qml.CNOT(wires = [1, 2])
+    qml.CNOT(wires = [2, 3])
+    qml.CNOT(wires = [3, 4])
+
+    qml.Barrier()       #Solo por estética
+
+    qml.SWAP(wires = [0, 4])
+    qml.RX(np.pi/2, wires=0)
+
+    return qml.probs(wires=range(5)) , qml.sample(wires=range(5))
+
+#Calculamos las probabilidades y las muestras aqui muestras se refiere a los posibles estados 
+probabilidades, muestras = circuito()
+
+
 
