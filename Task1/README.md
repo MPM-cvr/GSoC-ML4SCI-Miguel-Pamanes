@@ -106,7 +106,7 @@ for i, p in enumerate(probabilidades):
     print(f"Estado |{estado_binario}> : {p:.4f} ({p*100:.2f}%)")
 ```
 
-Wich gave us the next results
+Which gave us the following results:
 
 Estado |00000> : 0.0312 (3.12%)
 Estado |00001> : 0.0312 (3.12%)
@@ -142,7 +142,7 @@ Estado |11110> : 0.0312 (3.12%)
 Estado |11111> : 0.0312 (3.12%)
 
 
-At last but not least, we plot the circuit.
+Last but not least, we plot the circuit:
 
 ```python
 
@@ -152,6 +152,13 @@ fig, ax = qml.draw_mpl(circuito, scale=0.8)()
 fig.suptitle("Circuito", fontsize=14)
 plt.show()
 
+
+
 ```
+<img width="1220" height="619" alt="image" src="https://github.com/user-attachments/assets/f384ae7c-5aee-4bfa-879b-47c453daf6a7" />
+
+
+
+
 
 
