@@ -184,12 +184,18 @@ def circuito_2():
 
     qml.RX(np.pi/3, wires=2)
 
+    qml.Barrier()
+
     qml.CSWAP(wires=[0, 1, 3])
     qml.CSWAP(wires=[0, 2, 4])
+
+    qml.Barrier()    
 
     qml.Hadamard(wires=0)
 
     return qml.probs(wires=0)
+   
+
 ```
 
 Now I check the probabilities associated with each state:
@@ -218,7 +224,8 @@ plt.show()
 
 ```
 
-<img width="719" height="619" alt="image" src="https://github.com/user-attachments/assets/cc608544-4234-4a92-a316-39419972f665" />
+
+<img width="919" height="619" alt="image" src="https://github.com/user-attachments/assets/30381915-574b-44e8-8293-d65bf810233c" />
 
 
 
