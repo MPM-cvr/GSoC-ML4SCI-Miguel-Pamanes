@@ -30,9 +30,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 ```
 
-Then, we create the circuit with PennyLane. 
+Then, I create the circuit with PennyLane. 
 
-First, we define a device with 5 qubits. After that, we construct the quantum node applying the Hadamard gates, the CNOTs, the SWAP, and the RX rotation as requested:
+First, I define a device with 5 qubits. After that, I construct the quantum node applying the Hadamard gates, the CNOTs, the SWAP, and the RX rotation as requested:
 
 ```python
 dev = qml.device('default.qubit', wires = 5, shots = 10000) #Para fines educativos probamos solo 10,000
@@ -62,7 +62,7 @@ def circuito():
 probabilidades, muestras = circuito()
 
 ```
-We obtain the following results:
+I obtain the following results:
 ```Python
 #Revisamos las muestras
 print("Muestras:")
@@ -105,7 +105,7 @@ Muestras:
 [0 1 1 0 0]
 ```
 
-Then, we check the probability associated with each state:
+Then, I check the probability associated with each state:
 
 ```python
 for i, p in enumerate(probabilidades):
@@ -113,7 +113,7 @@ for i, p in enumerate(probabilidades):
     print(f"Estado |{estado_binario}> : {p:.4f} ({p*100:.2f}%)")
 ```
 
-Which gave us the following results:
+Which gave me the following results:
 
 ```text
 Estado |00000> : 0.0312 (3.12%)
@@ -192,8 +192,23 @@ def circuito_2():
     return qml.probs(wires=0)
 ```
 
+Now I check the probabilities associated with each state:
 
+```Python
 
+probas = circuito_2()
+
+for i, p in enumerate(probas):
+    estado_binario = format(i, '05b') 
+    print(f"Estado |{estado_binario}> : {p:.4f} ({p*100:.2f}%)")
+
+```
+That gave me the following results:
+
+```text
+Estado |00000> : 0.7500 (75.00%)
+Estado |00001> : 0.2500 (25.00%)
+```
 
 
 
