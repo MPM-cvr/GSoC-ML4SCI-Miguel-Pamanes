@@ -209,7 +209,16 @@ That gave me the following results:
 Estado |00000> : 0.7500 (75.00%)
 Estado |00001> : 0.2500 (25.00%)
 ```
+Finally I plot the circuit
 
+```Python
+fig, ax = qml.draw_mpl(circuito_2, scale=0.8)()
+fig.suptitle("Circuito", fontsize=14)
+plt.show()
+
+```
+
+<img width="719" height="619" alt="image" src="https://github.com/user-attachments/assets/cc608544-4234-4a92-a316-39419972f665" />
 
 
 
