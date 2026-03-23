@@ -102,7 +102,8 @@ from torch.utils.data import Dataset
 from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 ```
-Then I extract all the information to have it in one place
+
+Next, I aggregate all the data into a single structure for processing
 
 ```Python
 files = sorted(glob.glob('/Users/miguelpamanes/Desktop/Modular2/JETS QUARK:GLUON WITH BC/*.npz'))
