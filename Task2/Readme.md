@@ -72,7 +72,8 @@ There are 20 files in compressed NumPy (.npz), with two arrays
 ### Data Understanding
 To build an effective model, we must first achieve a deep understanding of the data and its underlying physical properties.
 
-First I import all the packages that I will use around all this project
+First, I will import all the packages that I will use throughout the project
+
 ```Python
 import numpy as np
 import datetime
@@ -101,6 +102,57 @@ from torch.utils.data import Dataset
 from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 ```
+Then I extract all the information to have it in one place
+
+```Python
+files = sorted(glob.glob('/Users/miguelpamanes/Desktop/Modular2/JETS QUARK:GLUON WITH BC/*.npz'))
+
+max_M = 0
+total_events = 0
+file_info = []
+
+for f in files:
+    header = np.load(f, mmap_mode = 'r')
+    shape = header['X'].shape
+
+    local_n = shape[0]
+    local_m = shape[1]
+
+    if local_m > max_M:
+        max_M = local_m
+    
+    total_events += local_n
+    file_info.append({'path':f, 'n': local_n, 'm': local_m})
+
+print(f'M Global: {max_M}')
+print(f'Total Eventos: {total_events}')
+    
+X = np.zeros((total_events, max_M, 4), dtype=np.float32)
+y = np.zeros((total_events,), dtype=np.float32)
+
+current_idx = 0
+
+for info in file_info:
+    f_path = info['path']
+    n_evs = info['n']
+    m_cols = info['m']
+
+    data = np.load(f_path, allow_pickle=True)
+    X_chunk = data['X']
+    y_chunk = data['y']
+
+    X[current_idx: current_idx + n_evs, :m_cols, :] = X_chunk
+    y[current_idx: current_idx + n_evs] = y_chunk
+
+    current_idx += n_evs
+
+    del data, X_chunk, y_chunk
+
+print('Shape final X:', X.shape)
+print('Shape final y:', y.shape)
+
+```
+
 
 
 ### Graph Convolutional Networks (GCN)
