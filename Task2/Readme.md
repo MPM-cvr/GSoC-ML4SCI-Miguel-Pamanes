@@ -4,7 +4,16 @@ In this section I will show you my procedure tu solve Task 2
 
 For Task II, you will use ParticleNet’s data for Quark/Gluon jet classification available here with its corresponding description. 
 - Choose 2 Graph-based architectures of your choice to classify jets as being quarks or gluons. Provide a description on what considerations you have taken to project this point-cloud dataset to a set of interconnected nodes and edges.
-- Discuss the resulting performance of the 2 chosen architectures. 
+- Discuss the resulting performance of the 2 chosen architectures.
+
+### Jets
+Before start talking about GNN, lets take a little time to talk about jets. 
+
+Jets are the footprint left by quarks and gluons produced in high-energy processes, such as proton-proton collisions. Due to color confinement, quarks and gluons (which have a color charge) cannot be "observed" directly. What is really "observed" is the process in which they join to form neutral color hadrons, this process is known as hadronization. And the whole set of hadrons is what is called Jet.
+
+https://www.bnl.gov/today/body_pics/2025/12/121125-blog-rhic-history-3-hr.jpg<img width="1000" height="564" alt="image" src="https://github.com/user-attachments/assets/0a7f10e6-c0d7-487d-ab60-81e0cf1fe2be" /> <br>
+(source: Brookhaven National Laboratory, “News Article,” BNL Newsroom)
+
 
 ### Graph Neural Networks
 
