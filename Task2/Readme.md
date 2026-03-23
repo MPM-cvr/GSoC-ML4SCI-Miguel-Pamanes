@@ -14,6 +14,7 @@ Graph Neural Networks (GNNs) are neural networks designed to work with data that
 (Source: Anay Dongre, “A Comprehensive Introduction to Graph Neural Networks,” Towards AI, 2023)
 
 
+
 In a GNN, the information of a node depends not only on its own characteristics, but also on the characteristics of its neighbors and how they connect with each other.
 
 GNNs work through an iterative process called Neural Message Passing.
