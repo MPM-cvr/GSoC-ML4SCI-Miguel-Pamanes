@@ -153,8 +153,17 @@ print('Shape final X:', X.shape)
 print('Shape final y:', y.shape)
 
 ```
+Next, I remove the padding to extract only the real particles and determine the multiplicity (particle count) of each jet.
+```Python
+mask = X[:, :, 0] > 0
 
+X_pt = X[:, :, 0][mask]
+X_ra = X[:, :, 1][mask]
+X_aa = X[:, :, 2][mask]
+X_pdgid = X[:, :, 3][mask]
 
+M = mask.sum(axis = 1)
+```
 
 ### Graph Convolutional Networks (GCN)
 
