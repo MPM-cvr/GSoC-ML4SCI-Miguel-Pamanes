@@ -10,10 +10,8 @@ For Task II, you will use ParticleNet’s data for Quark/Gluon jet classificatio
 
 Graph Neural Networks (GNNs) are neural networks designed to work with data that have a graph structure. A graph represents the relationships, which are called "edges", between a collection of entities, which are called "nodes". 
 
-<img width="875" height="659" alt="image" src="https://github.com/user-attachments/assets/01efbcca-3fd0-44b0-9d7b-79a2c83498f1" />
+<img width="875" height="659" alt="image" src="https://github.com/user-attachments/assets/01efbcca-3fd0-44b0-9d7b-79a2c83498f1" /> <br>
 (Source: Anay Dongre, “A Comprehensive Introduction to Graph Neural Networks,” Towards AI, 2023) <br>
-
-
 
 In a GNN, the information of a node depends not only on its own characteristics, but also on the characteristics of its neighbors and how they connect with each other.
 
