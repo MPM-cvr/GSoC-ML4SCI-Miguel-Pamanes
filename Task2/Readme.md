@@ -54,14 +54,14 @@ Definition of Jet (Clustering):
 
 There are 20 files in compressed NumPy (.npz), with two arrays 
 - Input (Features) - Array X:
-Dimension: (100000, M, 4).
-Composition: 50k jets of quarks + 50k jets of gluons (random order).
-M: Maximum particle multiplicity in the file (zero-padding).
-Variables by particle (4):
-Transverse moment (pT).
-Speed (and).
-Azimutal angle (φ).
-Particle ID (PDG ID).
+    - Dimension: (100000, M, 4).
+    - Composition: 50k jets of quarks + 50k jets of gluons (random order).
+    - M: Maximum particle multiplicity in the file (zero-padding).
+    - Variables by particle (4):
+        - Transverse moment (pT).
+        - Speed (and).
+        - Azimutal angle (φ).
+        - Particle ID (PDG ID).
 
 - Labels (Labels) - Array and:
 Dimension: (100000,).
