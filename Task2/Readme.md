@@ -13,4 +13,10 @@ Graph Neural Networks (GNNs) are neural networks designed to work with data that
 
 <img width="875" height="659" alt="image" src="https://github.com/user-attachments/assets/01efbcca-3fd0-44b0-9d7b-79a2c83498f1" />
 
+In a GNN, the information of a node depends not only on its own characteristics, but also on the characteristics of its neighbors and how they connect with each other.
 
+GNNs work through an iterative process called Neural Message Passing.
+
+- Message: Each node sends its information (its feature vector) to all its connected neighbors.
+- Aggregation: The receiving node takes all the messages from its neighbors and summarizes them in a single vector.
+- Update: The node combines the aggregated information of its neighbors with its own current information to generate a new state.
