@@ -165,6 +165,7 @@ X_pdgid = X[:, :, 3][mask]
 M = mask.sum(axis = 1)
 ```
 
+
 ### Graph Convolutional Networks (GCN)
 
 The GCN is the direct adaptation of convolutional image networks (CNN) to graphs. In a GCN, a node mixes its information with all the neighbors to which it is connected. 
