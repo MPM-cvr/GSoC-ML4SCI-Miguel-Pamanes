@@ -64,10 +64,16 @@ There are 20 files in compressed NumPy (.npz), with two arrays
         - Particle ID (PDG ID).
 
 - Labels (Labels) - Array and:
-Dimension: (100000,).
-Classes:
-0: Gluon.
-1: Quark.
+    - Dimension: (100000,).
+    - Classes:
+        - 0: Gluon.
+        - 1: Quark.
+
+### Data Understanding
+To build an effective model, we must first achieve a deep understanding of the data and its underlying physical properties.
+
+
+
 
 ### Graph Convolutional Networks (GCN)
 
