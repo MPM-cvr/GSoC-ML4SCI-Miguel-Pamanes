@@ -25,4 +25,14 @@ For this task, I chose these architectures:
 - Graph Convolutional Networks
 - Interaction Networks
 
+### Graph Convolutional Networks (GCN)
+
+The GCN is the direct adaptation of convolutional image networks (CNN) to graphs.
+
+In a GCN, a node mixes its information with all the neighbors to which it is connected.
+
+A GCN takes two matrices as input:
+- Matrix of Characteristics (X): Describe what each node is. Dimension: N×F (where N is the number of nodes and F is the number of characteristics per node).
+- Adjacency Matrix (A): Describes whether the nodes are connected. It is a N×N matrix full of 0s and 1s. If there is a 1 in the position (i,j), it means that node i and node j are connected.
+
 
