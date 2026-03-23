@@ -72,7 +72,35 @@ There are 20 files in compressed NumPy (.npz), with two arrays
 ### Data Understanding
 To build an effective model, we must first achieve a deep understanding of the data and its underlying physical properties.
 
-
+First I import all the packages that I will use around all this project
+```Python
+import numpy as np
+import datetime
+import matplotlib.pyplot as plt
+import torch
+import torch.nn as nn
+import random
+import torch_geometric.loader as geom_loader
+import glob
+import time
+import os
+import shutil
+from pathlib import Path
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score, accuracy_score, roc_curve, auc
+from sklearn.utils import shuffle 
+from torch_geometric.data import Data
+import torch.nn.functional as F
+from torch_geometric.loader import DataLoader
+from torch_geometric.nn import MessagePassing, global_add_pool, knn_graph, GCNConv, global_mean_pool, Linear
+from torch.utils.data import TensorDataset
+#from torch.utils.data import DataLoader
+from torch.utils.data import Dataset
+from tqdm import tqdm
+from torch.utils.tensorboard import SummaryWriter
+```
 
 
 ### Graph Convolutional Networks (GCN)
