@@ -11,3 +11,6 @@ To begin, quantum computing is an emerging intersection of computer science, phy
 The history of quantum computing is equally fascinating. Let me walk you through some of the key milestones that have shaped the field.
 
 <img width="894" height="435" alt="Captura de pantalla 2026-03-24 a la(s) 7 26 22 a m" src="https://github.com/user-attachments/assets/b6753be1-f3fb-4bf0-8559-744a99c6fba2" />
+
+It is truly remarkable how prominent physicists contributed to the early development of quantum computing.
+
