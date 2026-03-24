@@ -1,4 +1,4 @@
-### Task I: Quantum Computing Part 
+# Task I: Quantum Computing Part 
 
 In this section, I will present the development of the first task. This task requires the following:
 
