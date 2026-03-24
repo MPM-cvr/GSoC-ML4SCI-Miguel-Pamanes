@@ -180,8 +180,37 @@ such as this multiplicity distribution,
 <img width="574" height="451" alt="Captura de pantalla 2026-03-24 a la(s) 6 20 09 a m" src="https://github.com/user-attachments/assets/6e9288df-5daf-4212-a2d1-395c16b67d9d" />
 
 and this transverse momentum spectrum
+
 <img width="557" height="454" alt="Captura de pantalla 2026-03-24 a la(s) 6 22 51 a m" src="https://github.com/user-attachments/assets/4ed7e6b0-1843-4ca3-a6a8-29b3aaf6cf13" />
 
+Following this, I computed several interesting observables, such as pTD, LHA, and jet girth.
+
+```Python
+X_pt_r = pt / (pt.sum(axis = 1, keepdims = True) + 1e-8)
+
+phi_n = (phi + np.pi) % (2*np.pi) - np.pi
+
+pt_suma = (pt * mask).sum(axis=1, keepdims = True) + 1e-8
+ra_jet = (pt * ra * mask).sum(axis=1, keepdims = True)/pt_suma
+phi_jet = (pt * phi * mask).sum(axis=1, keepdims = True)/pt_suma
+
+d_phi = phi_jet - phi
+d_phi_n = (d_phi + np.pi) % (2*np.pi) - np.pi
+
+dra = ra_jet - ra
+
+dR = np.sqrt(d_phi_n**2 + dra**2)
+
+R_jet = 0.4
+
+pt_rel = pt/pt_suma
+girth = (pt_rel * dR * mask).sum(axis = 1)
+
+ptD = np.sqrt((pt**2*mask).sum(axis=1))/pt_suma.squeeze()
+lha = (pt_rel * np.sqrt(dR/R_jet) * mask).sum(axis=1)
+
+print(girth)
+```
 
 ### Graph Convolutional Networks (GCN)
 
