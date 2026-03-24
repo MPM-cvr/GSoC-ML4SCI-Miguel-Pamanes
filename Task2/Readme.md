@@ -1,4 +1,4 @@
-### Task II: Classical Graph Neural Network (GNN) 
+# Task II: Classical Graph Neural Network (GNN) 
 
 In this section I will show you my procedure tu solve Task 2
 
