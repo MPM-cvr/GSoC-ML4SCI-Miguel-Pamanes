@@ -21,3 +21,11 @@ The core premise of quantum computing is fundamentally shifting how we process i
 - Interference: Just like waves in a pond, quantum states can interfere with each other. We design algorithms to use constructive interference to amplify the probabilities of the correct answers, while using destructive interference to cancel out the wrong paths.
 - Measurement (Collapse): We cannot actually 'see' a superposition. The moment we measure the system, we force the qubit to collapse into a definitive classical state (0 or 1), permanently losing the hidden quantum information. That is why the measurement must be the very last step.
 
+Now, let's talk about the fundamental building block of quantum computing: the qubit. The qubit is the quantum analogue of the classical bit. Essentially, it is a two-level quantum system used to store and manipulate information within quantum algorithms. In the physical world, it is often represented by a photon or the spin of an electron.
+
+Finally, it is important to mention that quantum computing relies on quantum gates to perform its operations. Just like classical logic gates, a quantum gate is a mechanism to manipulate information, in this specific case, quantum states. Some of the most essential gates include:
+
+- Pauli Gates (X, Y, and Z): Which rotate the qubit's state.
+- The Hadamard (H) Gate: Which is crucial because it puts the qubit into a state of superposition.
+- The CNOT (Controlled-NOT) Gate: Which is used to entangle multiple qubits.
+
