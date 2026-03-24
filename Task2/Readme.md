@@ -164,6 +164,23 @@ X_pdgid = X[:, :, 3][mask]
 
 M = mask.sum(axis = 1)
 ```
+Then, I plot some interesting graphs
+
+```Python
+plt.hist(M[y==0], bins = 100, alpha = 0.6, label = 'Gluon')
+plt.hist(M[y==1], bins = 100, alpha = 0.6, label = 'Quark')
+plt.legend()
+plt.title('Histograma Multiplicidad')
+plt.xlabel('Multiplicidad')
+plt.ylabel('Frecuencia')
+plt.show()
+```
+such as this multiplicity distribution, 
+
+<img width="574" height="451" alt="Captura de pantalla 2026-03-24 a la(s) 6 20 09 a m" src="https://github.com/user-attachments/assets/6e9288df-5daf-4212-a2d1-395c16b67d9d" />
+
+and this transverse momentum spectrum
+<img width="557" height="454" alt="Captura de pantalla 2026-03-24 a la(s) 6 22 51 a m" src="https://github.com/user-attachments/assets/4ed7e6b0-1843-4ca3-a6a8-29b3aaf6cf13" />
 
 
 ### Graph Convolutional Networks (GCN)
