@@ -14,3 +14,10 @@ The history of quantum computing is equally fascinating. Let me walk you through
 
 It is truly remarkable how prominent physicists contributed to the early development of quantum computing.
 
+The core premise of quantum computing is fundamentally shifting how we process information by harnessing the unique phenomena of quantum mechanics. Instead of just building smaller classical components, we leverage these quantum properties to compute in entirely new ways. The main principles we rely on are:
+
+- Superposition: While a classical bit is strictly locked as either a 0 or a 1, a quantum bit (qubit) can exist in a complex linear combination of both states simultaneously, allowing us to explore vast computational spaces at once.
+- Entanglement: Famously dubbed 'spooky action at a distance' by Einstein, this is an intrinsic link between qubits. Once entangled, the state of one qubit dictates the state of another. They act as a single system and can no longer be described independently.
+- Interference: Just like waves in a pond, quantum states can interfere with each other. We design algorithms to use constructive interference to amplify the probabilities of the correct answers, while using destructive interference to cancel out the wrong paths.
+- Measurement (Collapse): We cannot actually 'see' a superposition. The moment we measure the system, we force the qubit to collapse into a definitive classical state (0 or 1), permanently losing the hidden quantum information. That is why the measurement must be the very last step.
+
