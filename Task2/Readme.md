@@ -710,6 +710,9 @@ And I obtained these results.
 <img width="643" height="324" alt="Captura de pantalla 2026-03-24 a la(s) 7 07 48 a m" src="https://github.com/user-attachments/assets/1a9b3c81-939f-49be-902d-a219daca2106" />
 
 
+### Results
+
+Comparing these two architectures, the IN showed better performance, achieving a test AUC of 0.8867, while the GCN reached 0.8640. This is interesting because it demonstrates how learning from edge features is crucial and leads to better network performance.
 
 
 
