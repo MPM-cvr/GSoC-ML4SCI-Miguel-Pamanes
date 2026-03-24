@@ -226,4 +226,499 @@ The Message Passing in this architecture is as following:
 - Aggregation: The node combines that average of the neighbors with its own original information.
 - Update: That mixture goes through a linear layer (W weight matrix) and an activation function (such as ReLU).
 
+For this network, I worked with a dataset that excludes c and b quarks.
+
+I define the function that will build the k-nearest neighbor graphs from a set of points.
+
+```Python
+def knn_graph_manual(pos, k):
+    
+    N = pos.size(0)
+
+    if N <= 1:
+        return torch.empty((2, 0), dtype=torch.long)
+
+    k_eff = min(k, N - 1)
+    
+    dist = torch.cdist(pos, pos)
+
+    idx = dist.topk(
+        k_eff + 1,
+        largest=False
+    ).indices[:, 1:]  
+
+    row = torch.arange(N).repeat_interleave(k_eff)
+    col = idx.reshape(-1)
+
+    return torch.stack([row, col], dim=0)
+```
+Next, I transform the data into graph representations.
+
+```Python
+
+def Jet_Grafo(X_row, y_label, k=16):
+    mask = X_row[:,0] > 0
+
+    X_real = X_row[mask]
+
+    if len(X_real) < k+1:
+        return None
+
+    x = torch.tensor(X_real, dtype=torch.float)
+
+    coords = x[:, 1:3].contiguous()
+    edge_index = knn_graph_manual(coords, k=k)
+
+    y = torch.tensor([int(y_label)], dtype=torch.long)
+
+    return Data(x=x, edge_index=edge_index, y=y)
+
+graphs = []
+
+for i in range(len(X)):
+    g = Jet_Grafo(X[i], y[i])
+
+    if g is not None:
+        graphs.append(g)
+```
+
+And then, I split my data: 1,600,000 for training, 200,000 for validation, and 200,000 for testing
+
+```Python
+random.seed(42)
+torch.manual_seed(42)
+random.shuffle(graphs)
+
+n_train = 1_600_000
+n_val = 200_000
+
+train_dataset = graphs[:n_train]
+val_dataset = graphs[n_train : n_train + n_val]
+test_dataset = graphs[n_train + n_val :]
+
+batch = 1024 
+
+train_loader = DataLoader(train_dataset, batch_size = batch, shuffle = True)
+val_loader = DataLoader(val_dataset, batch_size = batch, shuffle = False)
+test_loader = DataLoader(test_dataset, batch_size = batch, shuffle = False)
+```
+Then, we built the network, which is composed of three convolutional layers and a linear layer that gives the final output
+
+```Python
+class GNN(torch.nn.Module):
+    def __init__(self, hidden):
+        super(GNN, self).__init__()
+        torch.manual_seed(12345)
+
+        self.conv1 = GCNConv(4, hidden)
+        self.conv2 = GCNConv(hidden, hidden)
+        self.conv3 = GCNConv(hidden, hidden)
+
+        self.lin = Linear(hidden, 2)
+
+    def forward(self, x, edge_index, batch):
+        x = self.conv1(x, edge_index)
+        x = x.relu()
+
+        x = self.conv2(x, edge_index)
+        x = x.relu()
+
+        x = self.conv3(x, edge_index)
+
+        x = global_mean_pool(x, batch)
+
+        x = F.dropout(x, p=0.5, training=self.training)
+        x = self.lin(x)
+
+        return x
+```
+
+Finally, I trained the network for 20 epochs and evaluated it on the test set.
+
+```Python
+
+device = torch.device('cpu')
+
+model = GNN(hidden=64).to(device)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.0005) 
+criterion = torch.nn.CrossEntropyLoss()
+
+writer = SummaryWriter(log_dir)
+
+def train(loader):
+    model.train() 
+    total_loss = 0
+
+    for data in loader:
+        data = data.to(device)
+        
+        optimizer.zero_grad()         
+        out = model(data.x, data.edge_index, data.batch) 
+        loss = criterion(out, data.y)   
+        loss.backward()                
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        optimizer.step()               
+        
+        total_loss += loss.item()
+
+    return total_loss / len(loader)
+
+def evaluate(loader):
+    model.eval()
+    correct = 0
+    total_samples = 0
+
+    t_preds = []
+    t_labels = []
+
+    with torch.no_grad():
+        for data in loader:
+            data = data.to(device)
+            out = model(data.x, data.edge_index, data.batch)
+            pred_class = out.argmax(dim=1)
+            correct += int((pred_class == data.y).sum())
+            total_samples += data.y.size(0)
+            probs = F.softmax(out, dim=1)
+            prob_class_1 = probs[:, 1]
+            t_preds.extend(prob_class_1.cpu().numpy())
+            t_labels.extend(data.y.cpu().numpy())
+    acc = correct / total_samples
+
+    try:
+        auc = roc_auc_score(t_labels, t_preds)
+    except ValueError:
+        auc = 0.5 
+    return acc, auc
+
+best_val_acc = 0
+
+for epoch in range(1, 21): 
+    loss = train(train_loader)
+    train_acc, train_auc = evaluate(train_loader)
+    val_acc, val_auc = evaluate(val_loader)
+    print(f'Epoch: {epoch:03d} | Loss: {loss:.4f} | Train Acc: {train_acc:.4f} | Test Acc: {val_acc:.4f}')
+    writer.add_scalar('Loss/train', loss, epoch)
+    writer.add_scalar('Accuracy/train', train_acc, epoch)
+    writer.add_scalar('Accuracy/val', val_acc, epoch)
+    writer.add_scalar('AUC/train', train_auc, epoch)
+    writer.add_scalar('AUC/val', val_auc, epoch)
+    #print("Enfriando")
+    time.sleep(120)
+
+writer.flush()
+writer.close()    
+
+test_acc , test_auc = evaluate(test_loader)
+print(f'Accuracy Final (Test): {test_acc*100:.2f}%')
+print(f'AUC Final (Test): {test_auc:.4f}')
+
+```
+And ultimately, I obtained these results.
+
+<img width="480" height="410" alt="Captura de pantalla 2026-03-24 a la(s) 6 50 52 a m" src="https://github.com/user-attachments/assets/b510f2ef-5f92-42fb-9303-ac7295f69a80" />
+
+Interaction Network (IN)
+
+Interaction Network is a neural network designed specifically to reason about objects and their relationships in complex systems. The important thing about this network is that the IN (Interaction Network) tries to use specific information about the edge relations. The IN divides the process into two separate functions: one for the edges (relations) and one for the nodes (objects). 
+- An Edge Function that calculates a latent message or 'interaction' for each pair of connected nodes, explicitly conditioned by the attributes of the edge (such as geometric distance in space η−φ).
+- A Node Function that updates the representation of the node based on the aggregation of these interactions.
+
+Message Passing:
+- Message step: The network looks at each pair of connected nodes individually. It takes the characteristics of the receiving node, those of the sender and, sometimes, attributes of the line that joins them. (Edge Function)
+- Aggregation: Once the individual message has been calculated for each of the neighbors, it is summarized.
+- Update: Now the node has its own previous state and the "summary" of what its neighbors say. The Node function takes this data and calculates the new state.
+
+First, we convert our data into graphs, indicating to the network that geometric distance is important.
+
+```Python
+def Jet_Grafo(jet_array, label = None, k=8):
+    mask = jet_array[:, 0]>0
+    x_v = jet_array[mask]
+
+    if x_v.shape[0]<2:
+        return None
+    
+    x = torch.tensor(x_v, dtype = torch.float)
+    pos = x[:, 1 : 3]
+
+    edge_index = knn_graph_manual(pos, k = k)
+
+    row, col = edge_index
+
+    d_rap = pos[row, 0] - pos[col, 0]
+    d_phi = torch.atan2(
+        torch.sin(pos[row, 1] - pos[col, 1]),
+        torch.cos(pos[row, 1] - pos[col, 1])
+    )
+
+    dR_ij = torch.sqrt(d_rap**2 + d_phi**2).unsqueeze(1)
+
+    y_tensor = torch.tensor([int(label)], dtype = torch.long) if label is not None else None
+
+    data = Data(
+        x = x,
+        edge_index = edge_index,
+        edge_attr = dR_ij,
+        y = torch.tensor([int(label)], dtype = torch.long)
+    )
+
+    return data
+```
+
+I construct the feature vector containing the information I want the network to learn.
+
+```Python
+X_particles = np.stack([pt_rel, dra, d_phi, dR], axis=-1)
+
+X_particles *= mask[..., None]
+```
+
+After that, I built the core components of the network: the embedding, the message function, the node function, and the output. These modules are built using linear layers combined with ReLU activations.
+
+```Python
+class JET_GNN(MessagePassing):
+    def __init__(self, canales = 4, hidden = 64, edge = 1, p=0):
+        super().__init__(aggr='add')
+
+        self.embeding = nn.Linear(canales, hidden)
+
+        self.msg = nn.Sequential(
+            nn.Linear(2*hidden + edge, hidden),
+            nn.ReLU(),
+           # nn.Dropout(p),
+            nn.Linear(hidden, hidden), 
+            nn.ReLU()
+        )
+
+        self.nodo = nn.Sequential(
+            nn.Linear(2* hidden, hidden),
+            nn.ReLU(),
+            #nn.Dropout(p),
+            nn.Linear(hidden, hidden)
+        )
+
+        self.out = nn.Sequential(
+            nn.Linear(hidden, hidden),
+            nn.ReLU(),
+            #nn.Dropout(p),
+            nn.Linear(hidden, 1)
+        )
+
+    def forward(self, data):
+        h = self.embeding(data.x)
+        h = self.propagate(
+            data.edge_index,
+            h = h,
+            edge_attr = data.edge_attr
+        )
+        h_jet = global_add_pool(h, data.batch)
+        return self.out(h_jet).squeeze()
+    
+    def message(self, h_i, h_j, edge_attr):
+        tensor = torch.cat([h_i, h_j, edge_attr], dim = 1)
+        return self.msg(tensor)
+    
+    def update(self, aggr_out, h):
+        return self.nodo(
+            torch.cat([h, aggr_out], dim = 1)
+        )
+```
+I convert the data into graphs.
+
+```Python
+
+dataset = []
+
+for i in range(len(X_particles)):
+    graph = Jet_Grafo(X_particles[i], y[i], k = 8)
+
+    if graph is not None:
+        dataset.append(graph)
+
+```
+
+Then, I split my data: 1,600,000 for training, 200,000 for validation, and 200,000 for testing
+
+```Python
+random.seed(42)
+torch.manual_seed(42)
+random.shuffle(dataset)
+
+n_train = 1_600_000
+n_val = 200_000
+
+train_dataset = dataset[:n_train]
+val_dataset = dataset[n_train : n_train + n_val]
+test_dataset = dataset[n_train + n_val :]
+
+batch = 1024
+
+train_loader = DataLoader(train_dataset, batch_size = batch, shuffle = True)
+val_loader = DataLoader(val_dataset, batch_size = batch, shuffle = False)
+test_loader = DataLoader(test_dataset, batch_size = batch, shuffle = False)
+```
+
+
+Then, I trained the network. For this task, I used the entire training dataset and I trained this for 15 epochs. 
+
+```Python
+
+device = torch.device('cpu')
+
+model = JET_GNN(canales = 4, hidden = 64, edge = 1).to(device)
+loss_fn = nn.BCEWithLogitsLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay=1e-4)
+
+writer = SummaryWriter(log_dir)
+
+def train(loader):
+    model.train()
+    total_loss = 0
+    correct = 0
+    total_samples = 0
+
+    for data in loader:
+        data = data.to(device)
+        optimizer.zero_grad()
+        logits = model(data).view(-1)
+        loss = loss_fn(logits, data.y.float())
+        loss.backward()
+
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+
+        optimizer.step()
+        total_loss += loss.item()
+        preds = (torch.sigmoid(logits)>0.5).long()
+        correct += (preds == data.y).sum().item()
+        total_samples += data.y.size(0)
+
+    avg_loss = total_loss/len(loader)
+    
+    return avg_loss
+
+def evaluate(loader, return_preds=False):
+    model.eval()
+    eval_correct = 0
+    eval_total = 0
+    t_labels = []
+    t_probs = []
+    
+    with torch.no_grad():
+        for data in loader:
+            data = data.to(device)
+            logits = model(data).view(-1)
+            probs = torch.sigmoid(logits)
+            preds = (probs > 0.5).long()
+
+            eval_correct += (preds == data.y).sum().item()
+            eval_total += data.y.size(0)
+
+            t_labels.append(data.y.cpu())
+            t_probs.append(probs.cpu())
+
+    eval_acc = eval_correct/eval_total
+
+    y_true = torch.cat(t_labels).numpy()
+    y_score = torch.cat(t_probs).numpy()
+
+    try:
+        auc = roc_auc_score(y_true, y_score)
+    except ValueError:
+        auc = 0.5 
+
+
+    if return_preds:
+        y_pred = (y_score > 0.5).astype(int) 
+        return eval_acc, auc, y_true, y_pred, y_score
+
+    return eval_acc, auc
+
+   # y_true = torch.cat(t_labels).numpy()
+   # y_score = torch.cat(t_probs).numpy()
+
+    #return eval_acc, y_true, y_score
+
+history = {'train_loss': [], 'train_acc': [], 'val_acc': [], 'train_auc': [], 'val_auc': []}
+
+
+best_val_auc = 0
+patience = 10 
+counter = 0
+
+for epoch in range(1, 16): 
+
+    train_loss = train(train_loader)
+
+    train_acc, train_auc = evaluate(train_loader)
+    
+    val_acc, val_auc = evaluate(val_loader)
+
+    if val_auc > best_val_auc:
+        best_val_auc = val_auc
+        #torch.save(model.state_dict(), 'mejor_modelo_gnn.pth')
+        counter = 0 
+    else:
+        counter += 1
+    if counter >= patience:
+        print(f"Early Stopping activado. El entrenamiento se detiene en la época {epoch}.")
+        break
+    
+    history['train_loss'].append(train_loss)
+    history['train_acc'].append(train_acc)
+    history['val_acc'].append(val_acc)
+    history['train_auc'].append(train_auc)
+    history['val_auc'].append(val_auc)
+
+    print(f'Epoch {epoch:02d} | Loss {train_loss:.4f} | Train Acc {train_acc*100:.2f}% | AUC: {train_auc:.4f} | Val Acc {val_acc*100:.2f}% | AUC: {val_auc:.4f}')
+
+    writer.add_scalar('Loss/train', train_loss, epoch)
+    writer.add_scalar('Accuracy/train', train_acc, epoch)
+    writer.add_scalar('Accuracy/val', val_acc, epoch)
+    writer.add_scalar('AUC/train', train_auc, epoch)
+    writer.add_scalar('AUC/val', val_auc, epoch)
+
+    #print("Enfriando ")
+    time.sleep(60)  
+
+writer.flush()
+writer.close()      
+
+test_acc , test_auc, y_true_test, y_pred_test, y_score_test = evaluate(test_loader, return_preds=True)
+print(f'Accuracy Final (Test): {test_acc*100:.2f}%')
+print(f'AUC Final (Test): {test_auc:.4f}')
+    
+
+cm = confusion_matrix(y_true_test, y_pred_test)
+
+plt.figure(figsize=(6, 5))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=False,
+            xticklabels=['Gluón (0)', 'Quark (1)'], 
+            yticklabels=['Gluón (0)', 'Quark (1)'])
+
+plt.ylabel('Etiqueta Real', fontsize=12)
+plt.xlabel('Predicción de la GNN', fontsize=12)
+plt.title(f'Matriz de Confusión (Test AUC: {test_auc:.3f})', fontsize=14)
+
+plt.tight_layout()
+plt.show()
+
+
+```
+
+And I obtained these results.
+
+<img width="643" height="324" alt="Captura de pantalla 2026-03-24 a la(s) 7 07 48 a m" src="https://github.com/user-attachments/assets/1a9b3c81-939f-49be-902d-a219daca2106" />
+
+
+
+
+
+
+
+
+
+
+
+
+
 
