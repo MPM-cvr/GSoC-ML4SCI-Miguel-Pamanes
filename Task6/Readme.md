@@ -1,3 +1,13 @@
+### Task VI: Quantum representation learning
+
+
+In this section I will show you my procedure tu solve Task 6
+
+
+
+
+
+
 ```Python
 
 import torch
