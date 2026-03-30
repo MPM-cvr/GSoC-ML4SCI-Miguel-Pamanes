@@ -77,6 +77,8 @@ And these are a set of examples.
 <img width="794" height="812" alt="image" src="https://github.com/user-attachments/assets/e682fff2-6df0-4ad2-85d7-6fc525da4267" /> <br>
 
 
+This block acts as a preprocessing pipeline that prepares classical images for quantum integration. First, the original image is downsampled to an 8×8 resolution to manage simulator constraints. This grid is then flattened into a 1D vector of 64 values. Finally, these values undergo amplitude normalization, ensuring the total magnitude is exactly 1 to satisfy the requirements of a quantum state.
+
 ```Python
 
 
@@ -100,6 +102,9 @@ imagen, etiqueta = train_dataset[0]
 print(f"La etiqueta es: {etiqueta}")
 print(f"La forma de la imagen es: {imagen.shape}")
 
+```
+
+```Python
 
 
 num_qubits = 6
