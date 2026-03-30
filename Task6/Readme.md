@@ -14,6 +14,10 @@ In this task you should implement a simple representation learning scheme based 
 
 This code trains a quantum circuit to learn how to compare images of handwritten numbers (MNIST dataset) and determine if they are of the same number or not.
 
+### Code
+
+
+First, I imported all the necessary packages
 
 ```Python
 
@@ -25,8 +29,11 @@ import pennylane as qml
 import tensorflow as tf
 import random
 import torch.optim as optim
+```
 
 
+
+```Python
 transform_original = transforms.Compose([
     transforms.ToTensor() 
 ])
