@@ -69,7 +69,7 @@ There are 20 files in compressed NumPy (.npz), with two arrays
         - 0: Gluon.
         - 1: Quark.
 
-### Data Understanding
+### Code
 To build an effective model, we must first achieve a deep understanding of the data and its underlying physical properties.
 
 First, I will import all the packages that I will use throughout the project
