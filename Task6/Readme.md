@@ -71,9 +71,12 @@ plt.show()
 
 ```
 
-<img width="416" height="413" alt="image" src="https://github.com/user-attachments/assets/ecfad9c3-e100-4c16-8a92-980f3a1525fa" />
-This is just an example
+<img width="416" height="413" alt="image" src="https://github.com/user-attachments/assets/ecfad9c3-e100-4c16-8a92-980f3a1525fa" /> <br>
+This is a single example.
 
+
+<img width="794" height="812" alt="image" src="https://github.com/user-attachments/assets/e682fff2-6df0-4ad2-85d7-6fc525da4267" /> <br>
+And these are a set of examples.
 
 ```Python
 
