@@ -1,4 +1,4 @@
-### Task VI: Quantum representation learning
+# Task VI: Quantum representation learning
 
 In this section I will show you my procedure tu solve Task 6. 
 
@@ -10,7 +10,9 @@ In this task you should implement a simple representation learning scheme based 
 - Create a circuit with which takes two images and embeds both as quantum states with the function you wrote before. Afterwards the circuit should perform a SWAP test between the two states. In the end the measurement should give the fidelity of the quantum states.
 - Train the circuit parameters with a contrastive loss: For two MNIST images in the same class the fidelity should be maximized, while for images of different classes the fidelity should be minimized.
 
+### Objective
 
+This code trains a quantum circuit to learn how to compare images of handwritten numbers (MNIST dataset) and determine if they are of the same number or not.
 
 
 ```Python
