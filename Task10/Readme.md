@@ -113,6 +113,38 @@ class DiffusionCNN(nn.Module):
         return x
 
 
+class UNet(nn.Module):
+    def __init__(self, in_channels=3):
+        super().__init__()
+
+        # Encoder
+        self.down1 = nn.Conv2d(in_channels, 64, 3, padding=1)
+        self.down2 = nn.Conv2d(64, 128, 3, padding=1)
+
+        # Bottleneck
+        self.middle = nn.Conv2d(128, 128, 3, padding=1)
+
+        # Decoder
+        self.up1 = nn.Conv2d(128, 64, 3, padding=1)
+        self.up2 = nn.Conv2d(64, in_channels, 3, padding=1)
+
+    def forward(self, x, t):
+        d1 = F.relu(self.down1(x))
+        d2 = F.relu(self.down2(d1))
+
+        m = F.relu(self.middle(d2))
+
+        u1 = F.relu(self.up1(m))
+        u1 = u1 + d1  # skip connection
+
+        out = self.up2(u1)
+        return out
+
+
+
+
+
+
 
 def diffusion_loss(model, scheduler, x0):
     B = x0.shape[0]
