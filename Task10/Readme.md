@@ -1,5 +1,15 @@
 # Task X: Diffusion
 
+In this section I will show you my procedure tu solve Task 10.
+
+Task 10 ask the following
+
+Complete the specific task 2 from the DeepFalcon test. Comment on potential ideas to extend this classical diffusion architecture to a quantum diffusion and sketch out the architecture in detail.
+
+And this specific task from DeepFalcon is:
+Specific Task 2 (if you are interested in “Diffusion Models for Fast Detector Simulation” project):
+- Use a Diffusion Network model to represent the events in task 1. Please show a side-by side comparison of the original and reconstructed events and appropriate evaluation metric of your choice that estimates the difference between the two.
+
 
 
 ```Python
