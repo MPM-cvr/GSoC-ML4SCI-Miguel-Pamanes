@@ -30,8 +30,7 @@ import tensorflow as tf
 import random
 import torch.optim as optim
 ```
-
-
+To better understand the data, I first displayed an individual sample and then a series of original images for comparison.
 
 ```Python
 transform_original = transforms.Compose([
@@ -54,7 +53,6 @@ plt.colorbar
 plt.show()
 
 
-
 plt.figure(figsize=(10,10))
 
 for i in range(25):
@@ -69,6 +67,15 @@ for i in range(25):
     plt.title(f"Etiqueta: {etiqueta_original}")
 
 plt.show()
+
+
+```
+
+<img width="416" height="413" alt="image" src="https://github.com/user-attachments/assets/ecfad9c3-e100-4c16-8a92-980f3a1525fa" />
+This is just an example
+
+
+```Python
 
 
 transformar = transforms.Compose([
