@@ -103,6 +103,12 @@ print(f"La etiqueta es: {etiqueta}")
 print(f"La forma de la imagen es: {imagen.shape}")
 
 ```
+And for this example this block gave me:
+```Text
+La etiqueta es: 5
+La forma de la imagen es: torch.Size([64])
+```
+
 
 ```Python
 
