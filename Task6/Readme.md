@@ -70,7 +70,7 @@ plt.show()
 
 
 ```
-This is a single example.
+This is a single example. <br>
 <img width="416" height="413" alt="image" src="https://github.com/user-attachments/assets/ecfad9c3-e100-4c16-8a92-980f3a1525fa" /> <br>
 
 And these are a set of examples.
