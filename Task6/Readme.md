@@ -108,7 +108,10 @@ And for this example this block gave me:
 La etiqueta es: 5
 La forma de la imagen es: torch.Size([64])
 ```
+This block configures a 13 qubit quantum circuit to load and compare two images simultaneously. Use 6 qubits for the first image and 6 for the second, translating the list of 64 numbers (the pixels) into quantum states by rotating. During this embedding process, it also incorporates the theta parameters and intertwine the qubits to capture the patterns of the images.
 
+
+To compare both images, the code uses qubit number 0 (the ancilla) applying an algorithm called Swap Test. This algorithm puts the ancilla in superposition to try to exchange the states of both images at the same time; in the end, this judge qubit is measured.
 
 ```Python
 
