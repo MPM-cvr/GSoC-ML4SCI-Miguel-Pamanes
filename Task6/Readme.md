@@ -226,7 +226,7 @@ for paso in range(pasos):
 print("Los valores finales de theta son:", theta.detach().numpy())
 
 ```
-For this part I obteined the following results
+The following results were obtained from this stage of the simulation:
 
 ```Text
 
@@ -431,9 +431,13 @@ Paso 198 | Clases: 9 y 7 (Diferente) | Fidelidad: 0.9835 | Loss: 0.9835
 Paso 199 | Clases: 9 y 9 (Misma) | Fidelidad: 0.9570 | Loss: 0.0430
 Paso 200 | Clases: 7 y 9 (Diferente) | Fidelidad: 0.9349 | Loss: 0.9349
 Los valores finales de theta son: [ 0.71000546  3.3669798  -0.0877981  -0.0448373   0.22448504 -0.33262438]
-
-
 ```
+
+
+The I made the evaluation and validation phase of the model. To do this, a function that executes the circuit using the optimized parameters is defined, deactivating the gradient calculation.
+
+Finally, the code carries out two empirical validation tests and generates a visual representation of the results. Extract a couple of images from the same class and another from different classes, processing them through the circuit to calculate their final quantum fidelity
+
 
 
 ```Python
@@ -467,11 +471,11 @@ evaluar_y_graficar(img1_misma, img2_misma, l1_misma, l2_misma, theta)
 print("Prueba 2: Esperamos una fidelidad BAJA ")
 img1_dif, img2_dif, l1_dif, l2_dif = obtener_par_imagenes(test_dataset, misma_clase=False)
 evaluar_y_graficar(img1_dif, img2_dif, l1_dif, l2_dif, theta)
+```
 
 
 
-
-
+```Python
 
 def evaluar_promedio(dataset, theta, misma_clase=True, n=20):
     fidelidades = []
@@ -492,7 +496,6 @@ fid_dif   = evaluar_promedio(test_dataset, theta, False)
 
 print("Fidelidad promedio (misma clase):", fid_misma)
 print("Fidelidad promedio (distinta clase):", fid_dif)
-
 
 
 ```
