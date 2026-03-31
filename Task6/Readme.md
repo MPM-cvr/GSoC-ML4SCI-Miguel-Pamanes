@@ -472,6 +472,13 @@ print("Prueba 2: Esperamos una fidelidad BAJA ")
 img1_dif, img2_dif, l1_dif, l2_dif = obtener_par_imagenes(test_dataset, misma_clase=False)
 evaluar_y_graficar(img1_dif, img2_dif, l1_dif, l2_dif, theta)
 ```
+This first image demonstrates high fidelity and is correctly represented.
+
+<img width="515" height="299" alt="image" src="https://github.com/user-attachments/assets/e7e30298-1bd2-4051-8041-6488b938726e" />
+
+The second image reflects low fidelity, indicating that the model failed to converge correctly. Increasing the input pixel density might improve the network's performance.
+
+<img width="515" height="299" alt="image" src="https://github.com/user-attachments/assets/bdd9a6e8-4d7f-4435-946e-d3a1451e6fff" />
 
 
 
