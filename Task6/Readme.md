@@ -481,6 +481,7 @@ The second image reflects high fidelity but I expected low, indicating that the 
 <img width="515" height="299" alt="image" src="https://github.com/user-attachments/assets/bdd9a6e8-4d7f-4435-946e-d3a1451e6fff" />
 
 
+This last block of code implements a quantitative and statistically more robust evaluation of the quantum model. The function I made extracts random pairs from the test data set, evaluates their similarity by means of the already trained circuit and stores the individual results to finally average them.
 
 ```Python
 
@@ -507,6 +508,12 @@ print("Fidelidad promedio (distinta clase):", fid_dif)
 
 ```
 
+"So, I obtained the following results:
+
+```Text
+Fidelidad promedio (misma clase): 0.9385314471773739
+Fidelidad promedio (distinta clase): 0.9099716268307695
+```
 
 
 
