@@ -176,7 +176,10 @@ That gave me this image
 <img width="1920" height="1420" alt="image" src="https://github.com/user-attachments/assets/1f453d2a-6903-4029-8545-cf9d2671200f" />
 
 
+Then I realize the training phase of the model. Initially, the trainable parameters of the circuit are defined and the Adam optimization algorithm is configured. The iterative process consists of 200 steps in which an auxiliary generator randomly selects pairs of images from the data set, alternating in a structured way between pairs of the same class and pairs of different classes, guaranteeing balanced sampling.
 
+
+The circuit evaluates the pair of images and calculates their level of similarity, expressed as quantum fidelity. To guide network learning, a conditional loss function is established: if the images belong to the same class, the function minimizes the error by bringing fidelity closer to 1.0; on the contrary, if they are from different classes, it minimizes the error by forcing fidelity to 0.0.
 
 ```Python
 
@@ -249,11 +252,11 @@ def evaluar_y_graficar(img_a, img_b, label_a, label_b, theta):
     plt.tight_layout()
     plt.show()
 
-print("Prueba 1: Esperamos una fidelidad ALTA (cercana a 1.0)")
+print("Prueba 1: Esperamos una fidelidad ALTA")
 img1_misma, img2_misma, l1_misma, l2_misma = obtener_par_imagenes(test_dataset, misma_clase=True)
 evaluar_y_graficar(img1_misma, img2_misma, l1_misma, l2_misma, theta)
 
-print("Prueba 2: Esperamos una fidelidad BAJA (más cercana a 0.0)")
+print("Prueba 2: Esperamos una fidelidad BAJA ")
 img1_dif, img2_dif, l1_dif, l2_dif = obtener_par_imagenes(test_dataset, misma_clase=False)
 evaluar_y_graficar(img1_dif, img2_dif, l1_dif, l2_dif, theta)
 
