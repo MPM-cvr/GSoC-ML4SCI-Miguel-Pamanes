@@ -1,5 +1,17 @@
 # Task VII Equivariant quantum neural networks
 
+In this section I will show you my procedure tu solve Task 7.
+
+Task 7 ask the following
+
+In this task you are supposed to get started with equivariant quantum neural networks by implementing a Z_2 × Z_2 equivariant quantum neural network. Z_2 is a symmetry group an as an example we will generate a simple classical dataset which is respects the Z_2 x Z_2 symmetry.
+
+This example is explained in the paper https://arxiv.org/abs/2205.06217 and additional background can be found in https://arxiv.org/abs/2210.08566. 
+
+- Generate a classification dataset with two classes and two features x_1 and x_2 which respects the Z_2 x Z_2 symmetry (this corresponds to mirroring along y=x). An example can be found in the first reference paper.
+- Train a QNN to solve the classification problem
+- Train an Z_2 x Z_2 equivariant QNN to solve the classification problem and compare the results.
+
 
 ```Python
 import numpy as np
