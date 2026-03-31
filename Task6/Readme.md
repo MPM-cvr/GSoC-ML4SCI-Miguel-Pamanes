@@ -508,7 +508,7 @@ print("Fidelidad promedio (distinta clase):", fid_dif)
 
 ```
 
-"So, I obtained the following results:
+So, I obtained the following results:
 
 ```Text
 Fidelidad promedio (misma clase): 0.9385314471773739
