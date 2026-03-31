@@ -8,4 +8,6 @@ I chose to apply to the Machine Learning for Science (ML4Sci) organization becau
 
 Through this project, I aim not only to strengthen my knowledge, but also to actively contribute to the development of innovative tools for scientific discovery. 
 
+You can navigate through the menu to explore the various tasks developed for this application. For each task, I provide a detailed explanation of the code and the results achieved.
+
 ### I am still working on these tasks, so expect more updates to this page in the following days.
