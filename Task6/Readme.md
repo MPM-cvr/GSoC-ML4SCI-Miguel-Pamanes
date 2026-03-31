@@ -155,8 +155,12 @@ def quantum_comparator(img_a, img_b, theta):
     
     return qml.probs(wires=ancilla)
 
+```
 
 
+To visualize the circuit, I generate a list of 16 random numbers. These are not actual images from the MNIST dataset or real quantum weights; they are simply synthetic data used to initialize the simulator and render the circuit diagram.
+
+```Python
 img_a_prueba = torch.rand(16)
 img_b_prueba = torch.rand(16)
 theta_prueba = torch.rand(16)
@@ -164,7 +168,17 @@ theta_prueba = torch.rand(16)
 fig, ax = qml.draw_mpl(quantum_comparator)(img_a_prueba, img_b_prueba, theta_prueba)
 
 plt.show()
+```
 
+
+That gave me this image
+
+<img width="1920" height="1420" alt="image" src="https://github.com/user-attachments/assets/1f453d2a-6903-4029-8545-cf9d2671200f" />
+
+
+
+
+```Python
 
 theta = torch.rand(6, requires_grad=True)
 
