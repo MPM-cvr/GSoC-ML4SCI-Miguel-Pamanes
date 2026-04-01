@@ -26,6 +26,8 @@ At their core, they are generative models that learn to create data by reversing
 
 ### Code
 
+First, I imported all the necessary packages
+
 ```Python
 import torch
 import torch.nn as nn
@@ -35,8 +37,10 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 import h5py
 from skimage.metrics import structural_similarity as ssim
+```
 
-
+First, I began by processing the data. I loaded the variables X_jets, m0, pt, and y into memory. Finally, I printed the dimensions and data type of the primary variable to verify that the loading process was successful.
+```Python
 file_path = "/Users/miguelpamanes/Desktop/quark-gluon_data.hdf5"  
 
 with h5py.File(file_path, "r") as f:
@@ -49,9 +53,18 @@ with h5py.File(file_path, "r") as f:
 
 print("Shape X_jets:", X_jets.shape)
 print("Tipo:", X_jets.dtype)
+```
+That gave me the following
 
+```Text
+Llaves disponibles: ['X_jets', 'm0', 'pt', 'y']
+Shape X_jets: (139306, 125, 125, 3)
+Tipo: float32
+```
 
-X_jets = X_jets[:3000]
+Then I took a sample of 5,000 collisions, scaling their values from 0 to 1 so that the model does not "get dizzy" with large numbers, and changing the mathematical structure of the images so that they are compatible with PyTorch.
+```Python
+X_jets = X_jets[:5000]
 X_jets = X_jets / X_jets.max()
 
 X_jets = np.transpose(X_jets, (0, 3, 1, 2))
