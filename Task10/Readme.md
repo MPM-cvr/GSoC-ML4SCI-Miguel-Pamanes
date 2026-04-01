@@ -11,6 +11,13 @@ And this specific task from DeepFalcon is:
 Specific Task 2 (if you are interested in “Diffusion Models for Fast Detector Simulation” project):
 - Use a Diffusion Network model to represent the events in task 1. Please show a side-by side comparison of the original and reconstructed events and appropriate evaluation metric of your choice that estimates the difference between the two.
 
+### Diffusion Networks
+
+A Diffusion Model is a generative model that learns to create data by reversing a process of progressive degradation. Specifically, the algorithm adds Gaussian noise to an image step-by-step until the original content is completely indistinguishable. The model then learns to 'denoise' or undo this damage to reconstruct a clean image from pure noise.
+
+https://d3lkc3n5th01x7.cloudfront.net/wp-content/uploads/2023/07/10234402/diffusion-models-2.png<img width="1001" height="564" alt="image" src="https://github.com/user-attachments/assets/430a1108-511a-40e5-a69b-1f9c70f8135d" />
+
+
 
 ### Code
 
