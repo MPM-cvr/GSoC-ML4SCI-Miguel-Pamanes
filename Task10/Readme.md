@@ -79,6 +79,7 @@ So the new shape is
 Nuevo shape: (5000, 3, 125, 125)
 ```
 
+Next, I converted the matrices into native PyTorch Tensors. I then implemented a DataLoader to act as an automated pipeline; this handles shuffling the dataset and delivering the data to the neural network in mini-batches of 8 images at a time.
 
 ```Python
 class JetDataset(Dataset):
@@ -93,9 +94,11 @@ class JetDataset(Dataset):
 
 dataset = JetDataset(X_jets)
 dataloader = DataLoader(dataset, batch_size=8, shuffle=True)
+```
 
 
 
+```Python
 class DiffusionScheduler:
     def __init__(self, timesteps=200):
         self.timesteps = timesteps
