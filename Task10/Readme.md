@@ -20,8 +20,8 @@ A Diffusion Model is a generative model that learns to create data by reversing 
 
 At their core, they are generative models that learn to create data by reversing a process of destruction. Here is the breakdown of how they work:
 - Adding and Removing Noise: There are two steps:
--     Forward Diffusion (The Destruction): We take a clear image and gradually add random Gaussian noise to it over many small steps. Eventually, the image is completely unrecognizable—just pure "snow" on a TV screen.
--     Reverse Diffusion (The Creation): This is where the actual "Deep Learning" happens. We train a neural network to look at a noisy image and predict exactly how much noise was added in that step. By subtracting that predicted noise, we get a slightly cleaner image.
+    - Forward Diffusion (The Destruction): We take a clear image and gradually add random Gaussian noise to it over many small steps. Eventually, the image is completely unrecognizable—just pure "snow" on a TV screen.
+    - Reverse Diffusion (The Creation): This is where the actual "Deep Learning" happens. We train a neural network to look at a noisy image and predict exactly how much noise was added in that step. By subtracting that predicted noise, we get a slightly cleaner image.
 
 
 ### Code
