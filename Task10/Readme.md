@@ -96,7 +96,7 @@ dataset = JetDataset(X_jets)
 dataloader = DataLoader(dataset, batch_size=8, shuffle=True)
 ```
 
-
+I then implemented the DiffusionScheduler class to manage the Forward Process. This involves taking the clean data and progressively adding Gaussian noise until the original structure is completely destroyed, leaving only pure static.
 
 ```Python
 class DiffusionScheduler:
