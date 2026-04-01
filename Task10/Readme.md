@@ -57,12 +57,13 @@ print("Tipo:", X_jets.dtype)
 That gave me the following
 
 ```Text
-Llaves disponibles: ['X_jets', 'm0', 'pt', 'y']
+Etiquetas disponibles: ['X_jets', 'm0', 'pt', 'y']
 Shape X_jets: (139306, 125, 125, 3)
 Tipo: float32
 ```
 
-Then I took a sample of 5,000 collisions, scaling their values from 0 to 1 so that the model does not "get dizzy" with large numbers, and changing the mathematical structure of the images so that they are compatible with PyTorch.
+I then sampled 5,000 collisions and scaled their values to a range between 0 and 1; this normalization prevents the model from being overwhelmed by large gradients or disparate scales. Finally, I reshaped the data to ensure the image dimensions are compatible with PyTorch's required input format.
+
 ```Python
 X_jets = X_jets[:5000]
 X_jets = X_jets / X_jets.max()
@@ -70,9 +71,16 @@ X_jets = X_jets / X_jets.max()
 X_jets = np.transpose(X_jets, (0, 3, 1, 2))
 
 print("Nuevo shape:", X_jets.shape)
+```
+
+So the new shape is
+
+```Text
+Nuevo shape: (5000, 3, 125, 125)
+```
 
 
-
+```Python
 class JetDataset(Dataset):
     def __init__(self, X):
         self.X = torch.tensor(X, dtype=torch.float32)
