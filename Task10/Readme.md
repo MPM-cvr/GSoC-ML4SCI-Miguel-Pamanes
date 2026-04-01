@@ -116,9 +116,12 @@ class DiffusionScheduler:
 
         xt = torch.sqrt(alpha_hat_t) * x0 + torch.sqrt(1 - alpha_hat_t) * noise
         return xt, noise
+```
+
+I then developed the TimeEmbedding class. For the neural network to effectively denoise the particle collision images, it must be aware of the specific time step t. This class transforms that scalar value t into a high-dimensional 'signature' using sinusoidal embeddings, allowing the model to distinguish between different stages of the diffusion process.
 
 
-
+```Python
 class TimeEmbedding(nn.Module):
     def __init__(self, dim):
         super().__init__()
@@ -136,8 +139,13 @@ class TimeEmbedding(nn.Module):
         emb = torch.cat([torch.sin(emb), torch.cos(emb)], dim=1)
 
         return emb
+```
 
+Then I Designed two different architectures to solve the same problem.
 
+I implemented a 4-layer 'flat' CNN where the image resolution remains constant throughout the process. The model integrates temporal context by concatenating the time embedding as an extra channel. However, because it lacks downsampling layers, the network has a limited receptive field; this forces it to focus on local pixel details rather than capturing the global structure of the particle collision
+
+```Python
 class DiffusionCNN(nn.Module):
     def __init__(self, in_channels=3, time_dim=32):
         super().__init__()
@@ -166,8 +174,14 @@ class DiffusionCNN(nn.Module):
 
 
 class UNet(nn.Module):
-    def __init__(self, in_channels=3):
+    def __init__(self, in_channels=3, time_dim=32):
         super().__init__()
+
+        self.time_embed = TimeEmbedding(time_dim)
+
+        self.te_down = nn.Linear(time_dim, 64)
+        self.te_mid = nn.Linear(time_dim, 128)
+        self.te_up = nn.Linear(time_dim, 64)
 
         # Encoder
         self.down1 = nn.Conv2d(in_channels, 64, 3, padding=1)
@@ -181,14 +195,23 @@ class UNet(nn.Module):
         self.up2 = nn.Conv2d(64, in_channels, 3, padding=1)
 
     def forward(self, x, t):
+        t_emb = self.time_embed(t)
+
         d1 = F.relu(self.down1(x))
+        t_d1 = self.te_down(t_emb).view(-1, 64, 1, 1) 
+        d1 = d1 + t_d1
+
         d2 = F.relu(self.down2(d1))
 
         m = F.relu(self.middle(d2))
+        t_m = self.te_mid(t_emb).view(-1, 128, 1, 1)
+        m = m + t_m
 
         u1 = F.relu(self.up1(m))
-        u1 = u1 + d1  # skip connection
+        t_u1 = self.te_up(t_emb).view(-1, 64, 1, 1)
+        u1 = u1 + t_u1
 
+        u1 = u1 + d1  
         out = self.up2(u1)
         return out
 
