@@ -15,7 +15,8 @@ Specific Task 2 (if you are interested in “Diffusion Models for Fast Detector 
 
 A Diffusion Model is a generative model that learns to create data by reversing a process of progressive degradation. Specifically, the algorithm adds Gaussian noise to an image step-by-step until the original content is completely indistinguishable. The model then learns to 'denoise' or undo this damage to reconstruct a clean image from pure noise.
 
-https://d3lkc3n5th01x7.cloudfront.net/wp-content/uploads/2023/07/10234402/diffusion-models-2.png<img width="1001" height="564" alt="image" src="https://github.com/user-attachments/assets/430a1108-511a-40e5-a69b-1f9c70f8135d" />
+<img width="1001" height="564" alt="image" src="https://github.com/user-attachments/assets/430a1108-511a-40e5-a69b-1f9c70f8135d" /><br>
+(source: LeewayHertz. (s.f.). Diffusion Model [Imagen]. LeewayHertz.)
 
 
 
