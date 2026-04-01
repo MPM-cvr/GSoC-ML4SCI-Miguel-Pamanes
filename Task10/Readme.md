@@ -175,7 +175,7 @@ class DiffusionCNN(nn.Module):
 ```
 ### U-Net
 
-
+I designed and implemented a U-Net architecture as the core model, integrating linear adapters to inject time-awareness into every block. By utilizing skip connections, the network can effectively reconstruct images from pure noise, successfully balancing the recovery of global structure with the preservation of fine particle details.
 
 ```Python
 class UNet(nn.Module):
@@ -219,12 +219,12 @@ class UNet(nn.Module):
         u1 = u1 + d1  
         out = self.up2(u1)
         return out
+```
 
 
 
 
-
-
+```Python
 
 def diffusion_loss(model, scheduler, x0):
     B = x0.shape[0]
