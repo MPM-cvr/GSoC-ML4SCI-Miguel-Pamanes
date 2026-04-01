@@ -143,6 +143,7 @@ class TimeEmbedding(nn.Module):
 
 Then I Designed two different architectures to solve the same problem.
 
+### Diffusion CNN
 I implemented a 4-layer 'flat' CNN where the image resolution remains constant throughout the process. The model integrates temporal context by concatenating the time embedding as an extra channel. However, because it lacks downsampling layers, the network has a limited receptive field; this forces it to focus on local pixel details rather than capturing the global structure of the particle collision
 
 ```Python
@@ -171,8 +172,12 @@ class DiffusionCNN(nn.Module):
         x = self.conv4(x)
 
         return x
+```
+### U-Net
 
 
+
+```Python
 class UNet(nn.Module):
     def __init__(self, in_channels=3, time_dim=32):
         super().__init__()
