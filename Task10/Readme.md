@@ -378,7 +378,26 @@ train(model, scheduler, dataloader, optimizer, device, epochs=5)
 ```
 That gave the following results
 ```Text
-
+Epoch 1: Loss = 0.2388
+Epoch 2: Loss = 0.0553
+Epoch 3: Loss = 0.0361
+Epoch 4: Loss = 0.0277
+Epoch 5: Loss = 0.0225
+Epoch 6: Loss = 0.0205
+Epoch 7: Loss = 0.0147
+Epoch 8: Loss = 0.0118
+Epoch 9: Loss = 0.0123
+Epoch 10: Loss = 0.0090
+Epoch 11: Loss = 0.0090
+Epoch 12: Loss = 0.0078
+Epoch 13: Loss = 0.0072
+Epoch 14: Loss = 0.0062
+Epoch 15: Loss = 0.0070
+Epoch 16: Loss = 0.0054
+Epoch 17: Loss = 0.0059
+Epoch 18: Loss = 0.0053
+Epoch 19: Loss = 0.0047
+Epoch 20: Loss = 0.0048
 ```
 
 
@@ -425,10 +444,11 @@ def plot_comparison(real, generated, idx=0):
 
 plot_comparison(real, reconstructed, 0)
 ```
-That gave me the next comparission for CNN Difussion Model
-<img width="830" height="416" alt="Captura de pantalla 2026-04-03 a la(s) 9 19 43 p m" src="https://github.com/user-attachments/assets/a4b6b946-97ce-4a0f-a235-90663e4650ff" />
+That gave me the next comparission for CNN Difussion Model <br>
+<img width="830" height="416" alt="Captura de pantalla 2026-04-03 a la(s) 9 19 43 p m" src="https://github.com/user-attachments/assets/a4b6b946-97ce-4a0f-a235-90663e4650ff" /> <br>
 
-And gave this is for the U-Net model
+And gave this is for the U-Net model <br>
+<img width="831" height="418" alt="image" src="https://github.com/user-attachments/assets/7e665308-9963-4080-be07-41cea815755f" />
 
 
 
@@ -446,7 +466,7 @@ MSE: 0.0008771765
 ```
 And the following is for the U-Net Model
 ```Text
-
+MSE: 6.8999245e-05
 ```
 
 To evaluate the ability of the neural network to preserve the spatial structure of collisions, I implemented the SSIM metric. The function individually processes each pair of matrices (real and reconstructed), adjusts its format and restricts its values to the range of 0 to 1, finally calculating a global average that robustly quantifies the topological fidelity of the model.
@@ -475,7 +495,7 @@ SSIM: 0.37519923
 
 And the following is for the U-Net Model
 ```Text
-
+SSIM: 0.88797635
 ```
 
 
@@ -494,7 +514,8 @@ The following graphic is for CNN Difussion <br>
 <img width="578" height="435" alt="image" src="https://github.com/user-attachments/assets/68df4df0-cd18-4408-85d9-db4840de7082" /> <br>
 
 
-And this for U-Net model
+And this for U-Net model <br>
+<img width="578" height="435" alt="image" src="https://github.com/user-attachments/assets/9850b19a-c923-4a69-8f76-a33716c17ad8" />
 
 
 
