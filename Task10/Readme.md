@@ -447,9 +447,9 @@ MSE: 0.0008771765
 And the next for the U-Net Model
 ```Text
 
-``
+```
 
-
+To evaluate the ability of the neural network to preserve the spatial structure of collisions, I implemented the SSIM metric. The function individually processes each pair of matrices (real and reconstructed), adjusts its format and restricts its values to the range of 0 to 1, finally calculating a global average that robustly quantifies the topological fidelity of the model.
 
 ```Python
 def compute_ssim(x, y):
@@ -465,8 +465,22 @@ def compute_ssim(x, y):
     
     return np.mean(scores)
 
+print("SSIM:", compute_ssim(real, reconstructed))
+```
+
+That gave the following result for CNN Diffusion
+```Text
+SSIM: 0.37519923
+```
+
+And the next for the U-Net Model
+```Text
+
+```
 
 
+To validate the statistical fidelity of the model beyond the spatial topology, I implemented a comparative histogram of the pixel intensities.
+```Python
 plt.hist(real.flatten(), bins=50, alpha=0.5, label="Real")
 plt.hist(generated.flatten(), bins=50, alpha=0.5, label="Generated")
 plt.legend()
@@ -476,6 +490,17 @@ plt.show()
 
 ```
 
+The following graphic is for CNN Difussion
 <img width="578" height="435" alt="image" src="https://github.com/user-attachments/assets/68df4df0-cd18-4408-85d9-db4840de7082" />
+
+
+And this for U-Net model
+
+
+
+
+
+
+
 
 
