@@ -175,7 +175,7 @@ class DiffusionCNN(nn.Module):
 ```
 ### U-Net
 
-I designed and implemented a U-Net architecture as the core model, integrating linear adapters to inject time-awareness into every block. By utilizing skip connections, the network can effectively reconstruct images from pure noise, successfully balancing the recovery of global structure with the preservation of fine particle details.
+Also I designed and implemented a second architechture, an U-Net architecture as the core model, integrating linear adapters to inject time-awareness into every block. By utilizing skip connections, the network can effectively reconstruct images from pure noise, successfully balancing the recovery of global structure with the preservation of fine particle details.
 
 ```Python
 class UNet(nn.Module):
@@ -222,7 +222,7 @@ class UNet(nn.Module):
 ```
 
 
-
+Then I designed the diffusion_loss function. This function constitutes the optimization core of the generative model. Its fundamental purpose is to quantify the discrepancy between the actual stochastic noise injected into the data and the prediction of said noise made by the neural network (be it a CNN or U-Net architecture). By minimizing this error, the network learns to reverse the signal corruption process.
 
 ```Python
 
@@ -235,9 +235,12 @@ def diffusion_loss(model, scheduler, x0):
     noise_pred = model(xt, t)
 
     return F.mse_loss(noise_pred, noise)
+```
+
+In this code block, the main model optimization routine was implemented through a continuous training cycle. Over multiple eras, the algorithm extracts the information into small subsets, transfers the particle tensors to the corresponding hardware and calculates the Mean Square Error using the diffusion loss function. From this value, the system uses the backpropagation algorithm and an optimizer to adjust iteratively and mathematically the internal weights of the neural network, ending each era with a report of the average error.
 
 
-
+```Python
 def train(model, scheduler, dataloader, optimizer, device, epochs=5):
     model.train()
 
@@ -256,9 +259,11 @@ def train(model, scheduler, dataloader, optimizer, device, epochs=5):
             total_loss += loss.item()
 
         print(f"Epoch {epoch+1}: Loss = {total_loss / len(dataloader):.4f}")
+```
 
+Then the data generation process is executed through reverse diffusion. The algorithm begins by creating a pure Gaussian noise tensor and, through an iterative cycle that goes back in time step by step, uses the previously trained neural network to predict and subtract the noise present in each stage. Following the formal Denoising Diffusion Probabilistic Models (DDPM) equations, the model progressively cleans the matrix by injecting small amounts of stabilizing noise, until, when reaching the zero time step, the initial chaos converges into a completely new, coherent and high-fidelity particle collision simulation.
 
-
+```Python
 @torch.no_grad()
 def sample(model, scheduler, shape, device):
     x = torch.randn(shape).to(device)
@@ -282,9 +287,13 @@ def sample(model, scheduler, shape, device):
         ) + torch.sqrt(beta) * noise
 
     return x
+```
 
 
+In this code block I implemented a validation routine to evaluate the retention capacity and geometric fidelity of the neural network. Unlike free generation, this function takes a set of real collision matrices, injects them with the maximum level of Gaussian noise stipulated by the planner until the signal is obliterated, and subsequently uses the reverse diffusion iterative process of the DDPM models to try to recover the original structure.
 
+
+```Python
 @torch.no_grad()
 def reconstruct(model, scheduler, x0, device):
     model.eval()
@@ -314,9 +323,13 @@ def reconstruct(model, scheduler, x0, device):
         ) + torch.sqrt(beta) * noise
 
     return x
+```
 
+In the final implementation phase, I instantiated the network architecture and noise planner with 100 time steps, assigning the Adam optimizer with a learning rate of 1e-4 to ensure stable convergence. Finally, I orchestrated all these dependencies in the main cycle to train the model on particle collision simulations for 20 continuous periods, thus consolidating the machine learning process.
 
+This first example is for DifussionCNN
 
+```Python
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model = DiffusionCNN(in_channels=3).to(device)
@@ -324,11 +337,55 @@ scheduler = DiffusionScheduler(timesteps = 50)
 
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
+train(model, scheduler, dataloader, optimizer, device, epochs=5)
+```
 
+That gave me the following results 
+```Text
+Epoch 1: Loss = 0.2097
+Epoch 2: Loss = 0.0528
+Epoch 3: Loss = 0.0372
+Epoch 4: Loss = 0.0314
+Epoch 5: Loss = 0.0277
+Epoch 6: Loss = 0.0251
+Epoch 7: Loss = 0.0223
+Epoch 8: Loss = 0.0201
+Epoch 9: Loss = 0.0195
+Epoch 10: Loss = 0.0180
+Epoch 11: Loss = 0.0165
+Epoch 12: Loss = 0.0155
+Epoch 13: Loss = 0.0154
+Epoch 14: Loss = 0.0138
+Epoch 15: Loss = 0.0133
+Epoch 16: Loss = 0.0125
+Epoch 17: Loss = 0.0129
+Epoch 18: Loss = 0.0115
+Epoch 19: Loss = 0.0116
+Epoch 20: Loss = 0.0111
+```
+
+And the following code is for the U-NET
+
+```Python
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+model = UNet(in_channels=3).to(device)
+scheduler = DiffusionScheduler(timesteps = 50)
+
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
 train(model, scheduler, dataloader, optimizer, device, epochs=5)
+```
+That gave the following results
+```Text
+
+```
 
 
+To evaluate the model, I generated a batch of 16 synthetic simulations from scratch and processed another group of 16 actual collisions through the reconstruction function. Finally, I transferred all the resulting tensors from the GPU to the CPU and converted them to NumPy fixes, preparing the data in the ideal format to visually and statistically compare real, reconstructed and artificially generated samples.
+
+
+```Python
 generated = sample(model, scheduler, (16, 3, 125, 125), device)
 generated = generated.cpu().numpy()
 real = X_jets[:16]
@@ -341,8 +398,12 @@ reconstructed = reconstruct(
     device
 )
 reconstructed = reconstructed.cpu().numpy()
+```
 
 
+To qualitatively inspect the results, I designed a visualization function using the Matplotlib library. The algorithm takes the PyTorch tensors, reorganizes their spatial dimensions to the compatible Matplotlib format and normalizes the pixel intensities to the range of [0.1]. Finally, the code renders both simulations in an adjacent way, facilitating direct visual comparison of the particle distribution.
+
+```Python
 def plot_comparison(real, generated, idx=0):
     r = real[idx].transpose(1,2,0)
     g = generated[idx].transpose(1,2,0)
@@ -363,16 +424,34 @@ def plot_comparison(real, generated, idx=0):
     plt.show()
 
 plot_comparison(real, reconstructed, 0)
+```
+That gave me the next comparission for CNN Difussion Model
+<img width="830" height="416" alt="Captura de pantalla 2026-04-03 a la(s) 9 19 43 p m" src="https://github.com/user-attachments/assets/a4b6b946-97ce-4a0f-a235-90663e4650ff" />
+
+And gave this for the U-Net model
 
 
 
-
+To complement the visual inspection with an objective evaluation metric, I implemented the calculation of the Mean Square Error (MSE).
+```Python
 def mse(x, y):
     return ((x - y)**2).mean()
 
 print("MSE:", mse(real, reconstructed))
+```
+
+That gave the following for CNN Diffusion
+```Text
+MSE: 0.0008771765
+```
+And the next for the U-Net Model
+```Text
+
+``
 
 
+
+```Python
 def compute_ssim(x, y):
     scores = []
     for i in range(len(x)):
@@ -395,6 +474,8 @@ plt.title("Pixel Intensity Distribution")
 plt.show()
 
 
-
-
 ```
+
+<img width="578" height="435" alt="image" src="https://github.com/user-attachments/assets/68df4df0-cd18-4408-85d9-db4840de7082" />
+
+
