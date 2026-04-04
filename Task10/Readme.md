@@ -237,7 +237,7 @@ def diffusion_loss(model, scheduler, x0):
     return F.mse_loss(noise_pred, noise)
 ```
 
-In this code block, the main model optimization routine was implemented through a continuous training cycle. Over multiple eras, the algorithm extracts the information into small subsets, transfers the particle tensors to the corresponding hardware and calculates the Mean Square Error using the diffusion loss function. From this value, the system uses the backpropagation algorithm and an optimizer to adjust iteratively and mathematically the internal weights of the neural network, ending each era with a report of the average error.
+I implemented the core training loop to optimize the model over multiple epochs. By processing data in mini-batches, calculating the diffusion loss (MSE), and applying backpropagation, the optimizer iteratively updates the network's weights and logs the average error to track the learning progress.
 
 
 ```Python
