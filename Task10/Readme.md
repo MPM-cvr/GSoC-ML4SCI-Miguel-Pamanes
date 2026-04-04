@@ -428,7 +428,7 @@ plot_comparison(real, reconstructed, 0)
 That gave me the next comparission for CNN Difussion Model
 <img width="830" height="416" alt="Captura de pantalla 2026-04-03 a la(s) 9 19 43 p m" src="https://github.com/user-attachments/assets/a4b6b946-97ce-4a0f-a235-90663e4650ff" />
 
-And gave this for the U-Net model
+And gave this is for the U-Net model
 
 
 
@@ -440,11 +440,11 @@ def mse(x, y):
 print("MSE:", mse(real, reconstructed))
 ```
 
-That gave the following for CNN Diffusion
+That gave me the following for CNN Diffusion
 ```Text
 MSE: 0.0008771765
 ```
-And the next for the U-Net Model
+And the following is for the U-Net Model
 ```Text
 
 ```
@@ -468,12 +468,12 @@ def compute_ssim(x, y):
 print("SSIM:", compute_ssim(real, reconstructed))
 ```
 
-That gave the following result for CNN Diffusion
+That gave me the following result for CNN Diffusion
 ```Text
 SSIM: 0.37519923
 ```
 
-And the next for the U-Net Model
+And the following is for the U-Net Model
 ```Text
 
 ```
@@ -490,8 +490,8 @@ plt.show()
 
 ```
 
-The following graphic is for CNN Difussion
-<img width="578" height="435" alt="image" src="https://github.com/user-attachments/assets/68df4df0-cd18-4408-85d9-db4840de7082" />
+The following graphic is for CNN Difussion <br>
+<img width="578" height="435" alt="image" src="https://github.com/user-attachments/assets/68df4df0-cd18-4408-85d9-db4840de7082" /> <br>
 
 
 And this for U-Net model
