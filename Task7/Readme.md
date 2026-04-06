@@ -12,6 +12,17 @@ This example is explained in the paper https://arxiv.org/abs/2205.06217 and addi
 - Train a QNN to solve the classification problem
 - Train an Z_2 x Z_2 equivariant QNN to solve the classification problem and compare the results.
 
+### Equivariant quantum neural networks
+
+Equivariant quantum neural networks (EQNNs) are quantum artificial intelligence models designed from scratch to respect and preserve the natural symmetries of the data they process.
+
+Here equivariant means that if I apply a transformation to the input, the output transforms in an identical and predictable way.
+
+Equivariant Quantum Neural Networks offer several important advantages, especially in physics-driven applications. By explicitly incorporating symmetries into the model, they require significantly less training data, since the network does not need to relearn equivalent patterns under different transformations. This leads to improved generalization, as the model can better handle unseen data that follows the same underlying symmetries. Additionally, these networks naturally respect fundamental physical laws, making them particularly suitable for domains where symmetry principles are essential. As a result, EQNNs are especially powerful in fields such as high-energy physics, quantum chemistry, and any system where symmetry plays a central role.
+
+### Code
+
+First
 
 ```Python
 import numpy as np
